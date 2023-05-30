@@ -21,37 +21,29 @@
   </div>
 </div>
 
+<% if flash[:alert].present? %>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '<%= flash[:alert] %>',
+      });
+    });
+  </script>
+<% end %>
 
-<%# SweetAlert %>
 <script>
   document.getElementById('login-form').addEventListener('submit', function(event) {
     var emailField = document.getElementById('user_email');
     var passwordField = document.getElementById('user_password');
-    var errorMessage = document.getElementById('error-message');
 
-    if (emailField.value === '' && passwordField.value === '') {
+    if (emailField.value === '' || passwordField.value === '') {
       event.preventDefault();
       Swal.fire({
-      icon: 'warning',
-      title: 'Por favor, complete los campos para iniciar sesión.',
-      })
-      return
-    } 
-    if (emailField.value === '') {
-      event.preventDefault();
-      Swal.fire({
-      icon: 'warning',
-      title: 'Por favor, complete el correo.',
-      })
-      return
-    } 
-    if (passwordField.value === '') {
-      event.preventDefault();
-      Swal.fire({
-      icon: 'warning',
-      title: 'Por favor, complete la contraseña.',
-      })
-      return
+        icon: 'warning',
+        title: 'Por favor, complete todos los campos para iniciar sesión.',
+      });
     }
   });
 </script>
