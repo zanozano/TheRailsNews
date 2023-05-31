@@ -24,7 +24,7 @@
         <a class="nav-link <%= 'active' if current_page?(new_user_session_path) %>" href="<%= new_user_session_path %>">Log in</a>
         </li>
            <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Sign up</a>
+        <a class="nav-link <%= 'active' if current_page?(new_user_registration_path) %>" href="<%= new_user_registration_path %>">Sign up</a>
         </li>
     </div>
   </div>

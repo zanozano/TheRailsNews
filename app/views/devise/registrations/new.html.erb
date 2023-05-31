@@ -1,29 +1,73 @@
-<h2>Sign up</h2>
+<div class="container-custom col-8 col-lg-4 mx-auto my-5">
+  <div class="p-4">
+    <h2 class="text-center mb-4">Crear cuenta</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'needs-validation', novalidate: true }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      <div class="mb-3">
+        <%= f.label :email, class: 'form-label' %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password, class: 'form-label' %>
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', required: true %>
+        <div class="invalid-feedback">
+          <%= @minimum_password_length %> caracteres mínimo.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password_confirmation, class: 'form-label' %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', required: true %>
+        <div class="invalid-feedback">
+          Las contraseñas no coinciden.
+        </div>
+      </div>
+
+      <div id="password-match-message" class="mb-3" style="display: none; color: red;">
+        Las contraseñas no coinciden.
+      </div>
+
+      <div class="text-center">
+        <%= f.submit "Sign up", class: 'btn btn-primary' %>
+      </div>
+    <% end %>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var passwordField = document.getElementById('user_password');
+    var passwordConfirmationField = document.getElementById('user_password_confirmation');
+    var passwordMatchMessage = document.getElementById('password-match-message');
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    function checkPasswordMatch() {
+      if (passwordField.value !== passwordConfirmationField.value) {
+        passwordMatchMessage.style.display = 'block';
+        return false;
+      } else {
+        passwordMatchMessage.style.display = 'none';
+        return true;
+      }
+    }
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+    document.querySelector('form').addEventListener('submit', function(event) {
+      var emailField = document.getElementById('user_email');
 
-<%= render "devise/shared/links" %>
+      if (emailField.value === '' || passwordField.value === '' || !checkPasswordMatch()) {
+        event.preventDefault();
+        Swal.fire({
+          icon: 'warning',
+          title: 'Por favor, complete todos los campos correctamente.',
+        });
+      }
+    });
+
+    passwordConfirmationField.addEventListener('input', checkPasswordMatch);
+  });
+</script>
