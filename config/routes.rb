@@ -6,11 +6,14 @@ Rails.application.routes.draw do
     confirmations: 'users/confirmations',
     unlocks: 'users/unlocks'
   }
+  resources :users
+  resources :articles
 
   get '/sessions/index', to: 'sessions#index', as: 'session_index'
   get '/home/index', to: 'home#index', as: 'home_index'
 
-  resources :articles
+
+  get '/rails/routes', to: 'routes#index'
 
   root "home#index"
 end

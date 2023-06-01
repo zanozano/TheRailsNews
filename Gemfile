@@ -76,6 +76,6 @@ end
 gem 'faker'
 gem 'bootstrap'
 gem 'jquery-rails'
-gem 'bcrypt'
 gem 'jquery-rails'
 gem 'devise'
+gem 'rails-routes', group: :development
